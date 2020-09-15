@@ -45,6 +45,10 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
             .and()
                 .exceptionHandling().accessDeniedPage("/user/denied");
+
+        http.authorizeRequests().antMatchers("/h2-console/*").permitAll();
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
     }
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {

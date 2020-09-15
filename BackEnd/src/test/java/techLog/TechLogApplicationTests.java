@@ -10,4 +10,5 @@ class TechLogApplicationTests {
 	void contextLoads() {
 	}
 
+
 }
