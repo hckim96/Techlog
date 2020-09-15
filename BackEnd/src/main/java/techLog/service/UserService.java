@@ -16,8 +16,6 @@ public class UserService {
 
     @Transactional
     public Long signupUser(UserDto userDto){
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         return userRepository.save(userDto.toEntity()).getId();
     }
 }

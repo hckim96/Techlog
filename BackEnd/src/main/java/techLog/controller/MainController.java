@@ -3,7 +3,6 @@ package techLog.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.AllArgsConstructor;
 import techLog.dto.UserDto;
@@ -16,9 +15,8 @@ public class MainController {
     UserService userService;
 
     @GetMapping("/")
-    @ResponseBody
     public String main(){
-        return "main page";
+        return "main";
     }
 
     @GetMapping("/signup")
@@ -28,7 +26,7 @@ public class MainController {
     @PostMapping("/signup")
     public String doSignupUser(UserDto userDto){
         userService.signupUser(userDto);
-        return("redirect:/");
+        return "redirect:/";
     }
 
 }
