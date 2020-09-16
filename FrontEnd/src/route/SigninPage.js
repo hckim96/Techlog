@@ -2,13 +2,12 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import bcrypt from 'bcryptjs';
 import './SignupPage.css'
+
 const API_URL = "/api"
-export const SignupPage = (props) => {
+export const SigninPage = () => {
     const [data, setData] = useState({
-        userId: "",
-        userName: "",
-        email: "",
-        password: ""
+        userId: '',
+        password: ''
     });
     const updateField = (e) => {
         setData({
@@ -26,15 +25,15 @@ export const SignupPage = (props) => {
                 formData.append(key, data[key]);
             }
         }
-        axios.post(API_URL + "/signup", formData)
-            .then(res => console.log(res.headers.get("jwt-token")))
+        axios.post(API_URL + '/signin', formData)
+            .then(res => console.log(res))
             
-        // window.location = "/";
+        // window.location = '/';
     };
     return (
         <div className = "d-flex text-center vh-100">
             <form method = "post" onSubmit = {handleSubmit} className="form-signin">
-            <h1 className="h3 mb-3 font-weight-normal">Sign Up</h1>
+            <h1 className="h3 mb-3 font-weight-normal">Sign in</h1>
                 <label for="userId" class="sr-only">user id</label>
                 <input value = {data.userId}
                         type = "id"
@@ -42,13 +41,6 @@ export const SignupPage = (props) => {
                         className="form-control mb-2"
                         onChange = {updateField}
                         placeholder = "userId" required autoFocus>
-                </input>
-                <label for="userName" class="sr-only">Email address</label>
-                <input value = {data.userName}
-                        name = "userName"
-                        className="form-control mb-2"
-                        onChange = {updateField}
-                        placeholder = "userName" required>
                 </input>
                 <label for="password" class="sr-only">Email address</label>
                 <input value = {data.password}
@@ -58,15 +50,7 @@ export const SignupPage = (props) => {
                         onChange = {updateField}
                         placeholder = "password" required>
                 </input>
-                <label for="inputEmail" class="sr-only">Email address</label>
-                <input value = {data.email}
-                        type = "email"
-                        name = "email"
-                        className="form-control mb-2"
-                        onChange = {updateField}
-                        placeholder = "email" required>
-                </input>
-                <button className="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+                <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             </form>
         </div>
     )
