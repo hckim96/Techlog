@@ -10,23 +10,23 @@ import techLog.domain.User;
 public class UserDto {
     private Long id;
     private String userId;
-    private String userName;
+    private String username;
     private String password;
     private String email;
 
     public User toEntity() {
         return User.builder()
                     .userId(userId)
-                    .userName(userName)
+                    .username(username)
                     .password(password)
                     .email(email)
                     .build();
     }
 
     @Builder
-    public UserDto(String userId, String userName, String password, String email) {
+    public UserDto(String userId, String username, String password, String email) {
         this.userId = userId;
-        this.userName = userName;
+        this.username = username;
         this.password = email;
         this.password = password;
     }

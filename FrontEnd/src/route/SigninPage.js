@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs'
 import './SignupPage.css'
 
-const API_URL = "/api"
-export const SigninPage = () => {
+const API_URL = "/v1/api";
+const LS_JWT_TOKEN = "JWT_TOKEN";
+
+export const SigninPage = (props) => {
     const [data, setData] = useState({
         userId: '',
         password: ''
@@ -15,20 +17,22 @@ export const SigninPage = () => {
             [e.target.name]: e.target.value
         });
     };
-    let formData = new FormData();
     const handleSubmit = (e) => {
         e.preventDefault();
-        for (let key in data){
-            if (key == "password") {
-                formData.append(key, bcrypt.hashSync(data[key], 10))
-            } else {
-                formData.append(key, data[key]);
-            }
-        }
-        axios.post(API_URL + '/signin', formData)
-            .then(res => console.log(res))
+        axios.post(API_URL + '/signin', data)
+            .then((res) => {
+                if (res.status == 200) {
+                    localStorage.setItem(LS_JWT_TOKEN, res.data);
+                    console.log("login success!");
+                    console.log("res.data is " + res.data);
+                    props.history.push("/");
+                } else {
+                    alert("login failed");
+                }
+            }).catch((res) => {
+                alert("login failed");
+            })
             
-        // window.location = '/';
     };
     return (
         <div className = "d-flex text-center vh-100">
@@ -42,7 +46,7 @@ export const SigninPage = () => {
                         onChange = {updateField}
                         placeholder = "userId" required autoFocus>
                 </input>
-                <label for="password" class="sr-only">Email address</label>
+                <label for="password" class="sr-only">password</label>
                 <input value = {data.password}
                         type = "password"
                         name = "password"

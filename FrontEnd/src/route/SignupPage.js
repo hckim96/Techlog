@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import bcrypt from 'bcryptjs';
 import './SignupPage.css'
-const API_URL = "/api"
+const API_URL = "/v1/api"
 export const SignupPage = (props) => {
     const [data, setData] = useState({
         userId: "",
-        userName: "",
+        username: "",
         email: "",
         password: ""
     });
@@ -16,20 +15,12 @@ export const SignupPage = (props) => {
             [e.target.name]: e.target.value
         });
     };
-    let formData = new FormData();
     const handleSubmit = (e) => {
         e.preventDefault();
-        for (let key in data){
-            if (key == "password") {
-                formData.append(key, bcrypt.hashSync(data[key], 10))
-            } else {
-                formData.append(key, data[key]);
-            }
-        }
-        axios.post(API_URL + "/signup", formData)
-            .then(res => console.log(res.headers.get("jwt-token")))
+        axios.post(API_URL + "/signup", data)
+            .then(res => console.log(res))
             
-        // window.location = "/";
+        props.history.push("/");
     };
     return (
         <div className = "d-flex text-center vh-100">
@@ -43,12 +34,12 @@ export const SignupPage = (props) => {
                         onChange = {updateField}
                         placeholder = "userId" required autoFocus>
                 </input>
-                <label for="userName" class="sr-only">Email address</label>
-                <input value = {data.userName}
-                        name = "userName"
+                <label for="username" class="sr-only">Email address</label>
+                <input value = {data.username}
+                        name = "username"
                         className="form-control mb-2"
                         onChange = {updateField}
-                        placeholder = "userName" required>
+                        placeholder = "username" required>
                 </input>
                 <label for="password" class="sr-only">Email address</label>
                 <input value = {data.password}

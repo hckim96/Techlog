@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+
 import './Header.css'
-export const Header = () => {
+
+const LS_JWT_TOKEN = "JWT_TOKEN"
+export const Header = (props) => {
     return (
         <div className = "container-fluid">
             <header className="blog-header py-3" style = {{borderBottom: "1px solid #e5e5e5"}}>
@@ -15,8 +18,22 @@ export const Header = () => {
                         <div className="text-muted" aria-label="Search">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"></circle><path d="M21 21l-5.2-5.2"></path></svg>
                         </div>
-                        <Link to = "/signin" className="btn btn-sm btn-outline-secondary mr-2">Sign in</Link>
-                        <Link to = "/signup" className="btn btn-sm btn-outline-secondary">Sign up</Link>
+                        
+                        {props.isAuthenticated &&
+                            <div>
+                                hello ___ !
+                                <button onClick = {() => {
+                                    localStorage.removeItem(LS_JWT_TOKEN);
+                                    props.toggleIsAuthenticated();
+                                }} className="btn btn-sm btn-outline-secondary">log out</button>
+                            </div>
+                        }
+                        {!props.isAuthenticated &&
+                            <div>
+                            <Link to = "/signin" className="btn btn-sm btn-outline-secondary mr-2">Sign in</Link>
+                            <Link to = "/signup" className="btn btn-sm btn-outline-secondary">Sign up</Link>
+                            </div>
+                        }
                     </div>
                 </div>
             </header>
