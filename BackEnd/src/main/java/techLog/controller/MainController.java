@@ -38,10 +38,6 @@ public class MainController {
     
     UserService userService;
 
-    @GetMapping("/api")
-    public String main(){
-        return "main";
-    }
 
     @GetMapping("/api/admin/test")
     @ResponseBody
@@ -84,6 +80,7 @@ public class MainController {
         // UserDetails userdetails = (UserDetails) authentication.getPrincipal();
         // return userdetails.getUsername();
     }
+
 
 
 
