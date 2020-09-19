@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Header } from '../component/Header'
-
+import {PostContainer} from '../component/PostContainer.js';
+import { TagContainer } from '../component/TagContainer';
 const API_URL = "/v1/api";
 const LS_JWT_TOKEN = "JWT_TOKEN";
 export const Home = () => {
@@ -9,55 +10,100 @@ export const Home = () => {
     const [userId,setUserId] = useState("");
     const [userList, setUserList] = useState([
         {
-            "sample": "sample"
+            "userId": "sample",
+            "username": "sample",
+            "email": "sample",
+            "password": "sample"
         },
         {
-            "sample2": "sample2"
+            "userId": "sample2",
+            "username": "sample2",
+            "email": "sample2",
+            "password": "sample2"
         },
         {
-            "sample3": "sample3"
-        }
+            "userId": "sample3",
+            "username": "sample3",
+            "email": "sample3",
+            "password": "sample3"
+        },
+    ])
+    const [postList, setPostList] = useState([
+        {
+            "author": "author",
+            "title": "title",
+            "body": "body",
+        },
+        {
+            "author": "author2",
+            "title": "title2",
+            "body": "body2",
+        },
+        {
+            "author": "author3",
+            "title": "title3",
+            "body": "body3",
+        },
+        {
+            "author": "author4",
+            "title": "title4",
+            "body": "body4",
+        },
     ])
     useEffect(() => {
         const jwtToken = localStorage.getItem(LS_JWT_TOKEN);
         if (jwtToken != null) {
-            axios.get(API_URL + "/isAuthenticated", {headers:{"X-AUTH-TOKEN": `${jwtToken}`}})
+            getCurrentUser();
+        }
+        loadPosts();
+    },[])
+    const getCurrentUser = () => {
+        const jwtToken = localStorage.getItem(LS_JWT_TOKEN);
+
+        axios.get(API_URL + "/whoami", {headers:{"X-AUTH-TOKEN": `${jwtToken}`}})
             .then(res => {
                 setIsAuthenticated(true);
             })
             .catch(res => console.log("catch -> " + res));
-
-            
-        } 
-        
-        loadUsers();
-        console.log(userList);
-    },[])
-
+    }
     const loadUsers = async () => {
         axios.get("/users")
             .then(({data: {_embedded: {users}}})=> {
-                console.log(users);
                 let newUsers = [];
-                users.map((user) => {
+                newUsers = users.map((user) => {
+                    for (var key in user) {
+                        if (key != "userId" && key != "username" && key != "password" && key != "email") {
+
+                            delete user[key];
+                        }
+                    }
+                    return user;
                 })
-                 setUserList([...userList, newUsers])
+                 setUserList([...userList, ...newUsers])
             })
     }
-    const toggleIsAuthenticated = () => {
+    const loadPosts = () => {
+        axios.get("/posts")
+            .then(({data: {_embedded: {posts}}})=> {
+                 setPostList([...postList, ...posts])
+            })
+            .catch(res => console.log(res))
+    }
+    const logout = () => {
+        localStorage.removeItem(LS_JWT_TOKEN);
         setIsAuthenticated(!isAuthenticated);
     }
     return (
         <div>
-            <Header isAuthenticated = {isAuthenticated} toggleIsAuthenticated = {toggleIsAuthenticated}></Header>
+            <Header isAuthenticated = {isAuthenticated} logout = {logout}></Header>
             {isAuthenticated ? "authenticated" : "not authenticated"}
             <button onClick = {() => {
                         const jwtToken = localStorage.getItem(LS_JWT_TOKEN);
                         
                         if (jwtToken != null) {
                             axios.get(API_URL + "/user/test", {headers:{"X-AUTH-TOKEN": `${jwtToken}`}})
-                                .then(res => console.log("/user/test then -> " + res))
-                                .catch(res => console.log("/user/test catch -> " + res));
+                                .then(res => console.log(res))
+                                .catch(res => console.log(res));
                         }
         }}>/v1/api/user/test</button>
             <button onClick = {() => {
@@ -65,14 +111,24 @@ export const Home = () => {
                         
                         if (jwtToken != null) {
                             axios.get(API_URL + "/admin/test", {headers:{"X-AUTH-TOKEN": `${jwtToken}`}})
-                                .then(res => console.log("/admin/test then -> " + res))
-                                .catch(res => console.log("/admin/test catch -> " + res));
+                                .then(res => console.log(res))
+                                .catch(res => console.log(res));
                         }
         }}>/v1/api/admin/test</button>
-        
-        <button>
-        {JSON.stringify(userList, null, 2)}
-        </button>
+
+        <div className = "container">
+            <div className = "row">
+
+            <div className = "col-9 p-0">
+                <PostContainer posts = {postList}></PostContainer>
+
+            </div>
+            <div className = "col p-0">
+                <TagContainer></TagContainer>
+
+            </div>
+            </div>
+        </div>
         </div>
     )
 }

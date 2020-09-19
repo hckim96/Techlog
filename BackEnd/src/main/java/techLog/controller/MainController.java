@@ -3,19 +3,14 @@ package techLog.controller;
 import java.util.Collections;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +18,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import techLog.config.security.JwtTokenProvider;
+import techLog.domain.Post;
 import techLog.domain.User;
+import techLog.repository.PostRepository;
 import techLog.repository.UserRepository;
 import techLog.service.UserService;
 
@@ -35,21 +32,30 @@ public class MainController {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
-    
+    private final PostRepository postRepository;
     UserService userService;
 
 
     @GetMapping("/api/admin/test")
     @ResponseBody
-    public String adminTest() {
-        return "adminTest";
+    public String adminTest(Authentication auth) {
+        return ((UserDetails )auth.getPrincipal()).getUsername();
     }
     @GetMapping("/api/user/test")
     @ResponseBody
-    public String userTest() {
-        return "userTest";
+    public String userTest(Authentication auth) {
+        return ((UserDetails )auth.getPrincipal()).getUsername();
     }
 
+    @GetMapping("/api/whoami")
+    @ResponseBody
+    public String whoami(Authentication auth) {
+        if (auth.isAuthenticated()) {
+            return ((UserDetails )auth.getPrincipal()).getUsername();
+        } else {
+            return "not authenticated";
+        }
+    }
 
 
     @ApiOperation(value = "signup", notes = "signup notes")
@@ -73,12 +79,21 @@ public class MainController {
         return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
     }
 
-    @GetMapping("/api/isAuthenticated")
-    @ResponseBody 
-    public boolean isAuthenticated(Authentication authentication){
-        return  authentication.isAuthenticated();
-        // UserDetails userdetails = (UserDetails) authentication.getPrincipal();
-        // return userdetails.getUsername();
+    // @GetMapping("/api/isAuthenticated")
+    // @ResponseBody 
+    // public boolean isAuthenticated(Authentication authentication){
+    //     return  authentication.isAuthenticated();
+    //     // UserDetails userdetails = (UserDetails) authentication.getPrincipal();
+    //     // return userdetails.getUsername();
+    // }
+
+    @PostMapping("/api/write")
+    public Long write(@RequestBody Map<String, String> post) {
+        return postRepository.save(Post.builder()
+        .title(post.get("title"))
+        .author(post.get("author"))
+        .body(post.get("body"))
+        .build()).getId();
     }
 
 

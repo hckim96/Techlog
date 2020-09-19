@@ -24,7 +24,5 @@ public class Post extends BaseTimeEntity{
     private String author;
     private String body;
 
-    
-
 
 }
