@@ -15,39 +15,78 @@ export const Home = () => {
             "email": "sample",
             "password": "sample"
         },
-        {
-            "userId": "sample2",
-            "username": "sample2",
-            "email": "sample2",
-            "password": "sample2"
-        },
-        {
-            "userId": "sample3",
-            "username": "sample3",
-            "email": "sample3",
-            "password": "sample3"
-        },
     ])
     const [postList, setPostList] = useState([
         {
-            "author": "author",
-            "title": "title",
-            "body": "body",
+            "author": "sampleAuthor",
+            "title": "Sample Title",
+            "body": "sample body, sample body,sample body,sample body, sample body, sample body, sample body,",
+            "createdDate": "2020-09-20",
+            "modifiedDate": "2020-09-20"
         },
         {
-            "author": "author2",
-            "title": "title2",
-            "body": "body2",
+            "author": "sampleAuthor",
+            "title": "Sample Title",
+            "body": "sample body, sample body,sample body,sample body, sample body, sample body, sample body,",
+            "createdDate": "2020-09-20",
+            "modifiedDate": "2020-09-20"
+
         },
         {
-            "author": "author3",
-            "title": "title3",
-            "body": "body3",
+            "author": "sampleAuthor",
+            "title": "Sample Title",
+            "body": "sample body, sample body,sample body,sample body, sample body, sample body, sample body,",
+            "createdDate": "2020-09-20",
+            "modifiedDate": "2020-09-20"
+
         },
         {
-            "author": "author4",
-            "title": "title4",
-            "body": "body4",
+            "author": "sampleAuthor",
+            "title": "Sample Title",
+            "body": "sample body, sample body,sample body,sample body, sample body, sample body, sample body,",
+            "createdDate": "2020-09-20",
+            "modifiedDate": "2020-09-20"
+
+        },
+        {
+            "author": "sampleAuthor",
+            "title": "Sample Title",
+            "body": "sample body, sample body,sample body,sample body, sample body, sample body, sample body,",
+            "createdDate": "2020-09-20",
+            "modifiedDate": "2020-09-20"
+
+        },
+        {
+            "author": "sampleAuthor",
+            "title": "Sample Title",
+            "body": "sample body, sample body,sample body,sample body, sample body, sample body, sample body,",
+            "createdDate": "2020-09-20",
+            "modifiedDate": "2020-09-20"
+
+        },
+        {
+            "author": "sampleAuthor",
+            "title": "Sample Title",
+            "body": "sample body, sample body,sample body,sample body, sample body, sample body, sample body,",
+            "createdDate": "2020-09-20",
+            "modifiedDate": "2020-09-20"
+
+        },
+        {
+            "author": "sampleAuthor",
+            "title": "Sample Title",
+            "body": "sample body, sample body,sample body,sample body, sample body, sample body, sample body,",
+            "createdDate": "2020-09-20",
+            "modifiedDate": "2020-09-20"
+
+        },
+        {
+            "author": "sampleAuthor",
+            "title": "Sample Title",
+            "body": "sample body, sample body,sample body,sample body, sample body, sample body, sample body,",
+            "createdDate": "2020-09-20",
+            "modifiedDate": "2020-09-20"
+
         },
     ])
     useEffect(() => {
@@ -62,25 +101,10 @@ export const Home = () => {
 
         axios.get(API_URL + "/whoami", {headers:{"X-AUTH-TOKEN": `${jwtToken}`}})
             .then(res => {
+                setUserId(res.data);
                 setIsAuthenticated(true);
             })
             .catch(res => console.log("catch -> " + res));
-    }
-    const loadUsers = async () => {
-        axios.get("/users")
-            .then(({data: {_embedded: {users}}})=> {
-                let newUsers = [];
-                newUsers = users.map((user) => {
-                    for (var key in user) {
-                        if (key != "userId" && key != "username" && key != "password" && key != "email") {
-
-                            delete user[key];
-                        }
-                    }
-                    return user;
-                })
-                 setUserList([...userList, ...newUsers])
-            })
     }
     const loadPosts = () => {
         axios.get("/posts")
@@ -94,9 +118,9 @@ export const Home = () => {
         setIsAuthenticated(!isAuthenticated);
     }
     return (
-        <div>
-            <Header isAuthenticated = {isAuthenticated} logout = {logout}></Header>
-            {isAuthenticated ? "authenticated" : "not authenticated"}
+        <div className ="">
+            <Header userId = {userId} isAuthenticated = {isAuthenticated} logout = {logout}></Header>
+            {/* {isAuthenticated ? "authenticated" : "not authenticated"}
             <button onClick = {() => {
                         const jwtToken = localStorage.getItem(LS_JWT_TOKEN);
                         
@@ -114,21 +138,17 @@ export const Home = () => {
                                 .then(res => console.log(res))
                                 .catch(res => console.log(res));
                         }
-        }}>/v1/api/admin/test</button>
+        }}>/v1/api/admin/test</button> */}
 
-        <div className = "container">
-            <div className = "row">
+            <div className = "row pt-5 mx-5">
+                <div className = " col-9">
 
-            <div className = "col-9 p-0">
-                <PostContainer posts = {postList}></PostContainer>
-
+                    <PostContainer posts = {postList}></PostContainer>
+                </div>
+                <div className = "col ml-5 text-start">
+                    <TagContainer></TagContainer>
+                </div>
             </div>
-            <div className = "col p-0">
-                <TagContainer></TagContainer>
-
-            </div>
-            </div>
-        </div>
         </div>
     )
 }

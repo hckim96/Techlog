@@ -29,21 +29,29 @@ export const WritePage = (props) => {
         });
     }
     return (
-        <div className = "container">
-            <div>
-                <form className="was-validated">
+        <div className = "container mt-5 vh-100">
+            <div className = "mt-5 h-75">
+                <form>
+                <label >Title</label>
+
+                <input value = {input.title}
+                        name = "title"
+                        className="form-control form-control-lg mb-2 "
+                        onChange = {updateField}
+                        placeholder = "Input title..." required autoFocus>
+                </input>
                 <div className="mb-3">
-                    <label >Textarea</label>
-                    <textarea name = "body" value = {input.body} onChange = {updateField} className="form-control is-invalid" id="validationTextarea" placeholder="Required example textarea" required></textarea>
-                    <div className="invalid-feedback">
-                    Please enter a message in the textarea.
-                    </div>
+                    <label >Body</label>
+                    <textarea name = "body" value = {input.body} onChange = {updateField} className="form-control "  placeholder="Input body..." required></textarea>
                 </div>
                 </form>
             </div>
-            <button className = "btn btn-primary float-right" onClick = {writePost}>
-                write
-            </button>
+            <div className = "mb-0 ">
+                <button className = "btn btn-primary float-right" onClick = {writePost}>
+                    write
+                </button>
+
+            </div>
         </div>
     )
 }

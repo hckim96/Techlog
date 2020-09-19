@@ -38,7 +38,7 @@ export const SigninPage = (props) => {
         <div className = "d-flex text-center vh-100">
             <form method = "post" onSubmit = {handleSubmit} className="form-signin">
             <h1 className="h3 mb-3 font-weight-normal">Sign in</h1>
-                <label for="userId" class="sr-only">user id</label>
+                <label  className="sr-only">user id</label>
                 <input value = {data.userId}
                         type = "id"
                         name = "userId"
@@ -46,7 +46,7 @@ export const SigninPage = (props) => {
                         onChange = {updateField}
                         placeholder = "userId" required autoFocus>
                 </input>
-                <label for="password" class="sr-only">password</label>
+                <label className="sr-only">password</label>
                 <input value = {data.password}
                         type = "password"
                         name = "password"

@@ -4,7 +4,7 @@ import './Header.css'
 
 const LS_JWT_TOKEN = "JWT_TOKEN"
 
-export const Header = ({isAuthenticated, logout}) => {
+export const Header = ({userId, isAuthenticated, logout}) => {
     return (
         <div className = "container-fluid pr-4 pl-4">
             <header className="blog-header py-3" style = {{borderBottom: "1px solid #e5e5e5"}}>
@@ -21,14 +21,14 @@ export const Header = ({isAuthenticated, logout}) => {
                         
                         {isAuthenticated &&
                             <div className = "row">
-                                <Link className = "btn btn-sm btn-outline-secondary mr-2 ml-2 align-baseline" to = "write">
+                                <Link className = "btn btn-sm btn-outline-secondary mr-2 ml-2 pt-2" to = "write">
                                     Write Post
                                 </Link>
                                 <div className="dropdown">
-                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        asdf
+                                    <button className="btn btn-secondary dropdown-toggle " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {userId}
                                     </button>
-                                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <div className="dropdown-menu dropdown-menu-right " aria-labelledby="dropdownMenuButton" style = {{background : "white"}}>
                                         <Link className="dropdown-item" onClick = {logout}to = "/">Log Out</Link>
                                     </div>
                                 </div>
