@@ -79,14 +79,6 @@ public class MainController {
         return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
     }
 
-    // @GetMapping("/api/isAuthenticated")
-    // @ResponseBody 
-    // public boolean isAuthenticated(Authentication authentication){
-    //     return  authentication.isAuthenticated();
-    //     // UserDetails userdetails = (UserDetails) authentication.getPrincipal();
-    //     // return userdetails.getUsername();
-    // }
-
     @PostMapping("/api/write")
     public Long write(@RequestBody Map<String, String> post) {
         return postRepository.save(Post.builder()
@@ -95,7 +87,7 @@ public class MainController {
         .body(post.get("body"))
         .build()).getId();
     }
-
+ 
 
 
 

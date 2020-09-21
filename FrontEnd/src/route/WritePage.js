@@ -11,9 +11,12 @@ export const WritePage = (props) => {
     const writePost = () => {
         let jwtToken = localStorage.getItem("JWT_TOKEN");
         if (jwtToken != null) {
+            axios.get("/v1/api/whoami", {headers:{"X-AUTH-TOKEN": `${jwtToken}`}})
+                .then(res => setInput({...input, author: {res}}));
             axios.post("/v1/api/write", input,{headers:{"X-AUTH-TOKEN": `${jwtToken}`}})
             .then(res => console.log(res))
             .catch(res => console.log(res))
+            console.log(input);
             props.history.push("/");
 
         } else {

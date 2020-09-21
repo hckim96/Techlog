@@ -1,10 +1,9 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom';
+import './Post.css';
 export const PostContainer = ({posts}) => {
 
-    console.log(posts)
     const postList = posts.map((post) => {
-        console.log(post)
         return <Post 
         key = {post.title}
         title = {post.title}
@@ -25,22 +24,21 @@ export const PostContainer = ({posts}) => {
 
 export const Post = ({title, author, body, createdDate}) => {
     return (
-        <div className = "col-md-4 py-2  text-truncate">
-            <div className = "border p-2">
-            <div className = "font-weight-bolder mb-3">
-                {title}
-            </div>
-            <div className = "text-wrap mb-3">
-                {body}
-            </div>
-            <div className = "mb-3 text-secondary">
-                {createdDate}
-            </div>
-            <div className = "border-top text-secondary font-italic">
-                by {author}
-            </div>
-
-            </div>
+        <div className = "col-md-4 py-2">
+            <Link to = {`/@${author}/${title}`} className = "border p-2  post  postCard" style = {{textDecoration: "none", color: "black"}}>
+                <div className = "font-weight-bolder mb-3" style ={{fontSize: "1.5rem"}}>
+                    {title}
+                </div>
+                <div className = "text-wrap mb-3 mybody">
+                    {body}
+                </div>
+                <div className = "mb-3 text-secondary">
+                    {createdDate}
+                </div>
+                <div className = "border-top text-secondary font-italic">
+                    by {author}
+                </div>
+            </Link>
         </div>
     )
 }

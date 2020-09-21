@@ -20,7 +20,7 @@ export const Home = () => {
         {
             "author": "sampleAuthor",
             "title": "Sample Title",
-            "body": "sample body, sample body,sample body,sample body, sample body, sample body, sample body,",
+            "body": "sample body, sample body,sample body,sample body, sample body, sample body, sample body,sample body, sample body,sample body,sample body, sample body, sample body, sample body,sample body, sample body,sample body,sample body, sample body, sample body, sample body,",
             "createdDate": "2020-09-20",
             "modifiedDate": "2020-09-20"
         },
