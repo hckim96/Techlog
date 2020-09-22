@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 
@@ -8,16 +8,23 @@ export const WritePage = (props) => {
         author: "",
         body: "",
     })
+
+    useEffect(() => {
+        let jwtToken = localStorage.getItem("JWT_TOKEN");
+            if (jwtToken != null) {
+                axios.get("/v1/api/whoami", {headers:{"X-AUTH-TOKEN": `${jwtToken}`}})
+                    .then(({data}) => setInput({...input, author: data}))
+            }
+    },[])
+
     const writePost = () => {
         let jwtToken = localStorage.getItem("JWT_TOKEN");
         if (jwtToken != null) {
-            axios.get("/v1/api/whoami", {headers:{"X-AUTH-TOKEN": `${jwtToken}`}})
-                .then(res => setInput({...input, author: {res}}));
+
             axios.post("/v1/api/write", input,{headers:{"X-AUTH-TOKEN": `${jwtToken}`}})
-            .then(res => console.log(res))
+            .then(res => props.history.push("/"))
             .catch(res => console.log(res))
-            console.log(input);
-            props.history.push("/");
+            
 
         } else {
             console.log("jwtToken is null");

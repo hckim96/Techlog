@@ -1,1 +1,11 @@
-insert into user (user_id, password, username, email, created_date, modified_date) values ('user id','password','username','email', now(), now());
+insert into user (user_id, password, username, email, created_date, modified_date) values ('sample','{bcrypt}$2a$10$fpkqDBzgueZ5wKr.xtpHw.LLe7GxpdscBc4CUY95.71kJnf050Xxe','sample','sample@sample', now(), now());
+insert into post (title, author, body, created_date, modified_date ) values ('sample1', 'sample', 'body', now(), now());
+insert into post (title, author, body, created_date, modified_date ) values ('sample1', 'sample', 'body', now(), now());
+insert into post (title, author, body, created_date, modified_date ) values ('sample1', 'sample', 'body', now(), now());
+insert into post (title, author, body, created_date, modified_date ) values ('sample1', 'sample', 'body', now(), now());
+insert into post (title, author, body, created_date, modified_date ) values ('sample1', 'sample', 'body', now(), now());
+insert into post (title, author, body, created_date, modified_date ) values ('sample1', 'sample', 'body', now(), now());
+insert into post (title, author, body, created_date, modified_date ) values ('sample1', 'sample', 'body', now(), now());
+insert into post (title, author, body, created_date, modified_date ) values ('sample1', 'sample', 'body', now(), now());
+insert into post (title, author, body, created_date, modified_date ) values ('sample1', 'sample', 'body', now(), now());
+insert into post (title, author, body, created_date, modified_date ) values ('sample1', 'sample', 'body', now(), now());

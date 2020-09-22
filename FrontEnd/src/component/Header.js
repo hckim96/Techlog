@@ -5,6 +5,7 @@ import './Header.css'
 const LS_JWT_TOKEN = "JWT_TOKEN"
 
 export const Header = ({userId, isAuthenticated, logout}) => {
+
     return (
         <div className = "container-fluid pr-4 pl-4">
             <header className="blog-header py-3" style = {{borderBottom: "1px solid #e5e5e5"}}>
@@ -12,7 +13,7 @@ export const Header = ({userId, isAuthenticated, logout}) => {
                     <div className="col-4 pt-1">
                     </div>
                     <div className="col-4 text-center">
-                        <a className="blog-header-logo text-dark">Techlog</a>
+                        <Link to =  "/" className="blog-header-logo text-dark">Techlog</Link>
                     </div>
                     <div className="col-4 d-flex justify-content-end align-items-center">
                         <div className="text-muted" aria-label="Search">

@@ -1,5 +1,11 @@
 /* stylelint-disable selector-list-comma-newline-after */
 
+.sticky {
+  position: fixed;
+  background: white;
+  top: 0px;
+  z-index: 10;
+}
 .blog-header {
   line-height: 1;
   border-bottom: 1px solid #e5e5e5;
