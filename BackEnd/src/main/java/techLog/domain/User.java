@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,6 +39,9 @@ public class User extends BaseTimeEntity implements UserDetails{
     private String email;
     // post
     // comment
+
+    @OneToMany(mappedBy="user")  
+    private List<Post> posts;   
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

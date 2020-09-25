@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Header } from '../component/Header';
+import './PostPage.css';
+import { Link } from 'react-router-dom';
 
 const API_URL = "/v1/api"
 const LS_JWT_TOKEN = "JWT_TOKEN";
@@ -37,20 +39,20 @@ export const PostPage = ({match}) => {
             .then(res => {setPost(res.data);
             });
     }
+
     return (
         <div>
             <Header userId = {userId} isAuthenticated = {isAuthenticated} logout = {logout}></Header>
 
-            <div className = "container vh-100">
-                <div className = "info">
-
-                    <div className = "h1 mt-3 mb-3 pb-2">
+            <div className = "postPageContainer">
+                <div className = "d-flex flex-column">
+                    <div className = "title">
                     {post.title} 
                     </div>
-                    <div>
-                        <div>{post.author}</div> <div> {post.createdDate}</div>
+                    <div className = "info d-flex flex-row">
+                        <span> <Link className = "author" to = {`/@${post.author}`}>{post.author} </Link></span> <span className = "separator">·</span> <span className = "createdDate"> {post.createdDate}</span>
                     </div>
-                    <div>tags</div>
+                    <div className = "tags">tags</div>
                 </div>
                 <div className = "body">
                 {post.body}
