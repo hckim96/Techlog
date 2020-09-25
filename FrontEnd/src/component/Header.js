@@ -22,7 +22,7 @@ export const Header = ({userId, isAuthenticated, logout}) => {
                         
                         {isAuthenticated &&
                             <div className = "row">
-                                <Link className = "btn btn-sm btn-outline-secondary mr-2 ml-2 pt-2" to = "write">
+                                <Link className = "btn btn-sm btn-outline-secondary mr-2 ml-2 pt-2" to = "/write">
                                     Write Post
                                 </Link>
                                 <div className="dropdown">
