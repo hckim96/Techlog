@@ -54,8 +54,7 @@ export const PostPage = ({match}) => {
                     </div>
                     <div className = "tags">tags</div>
                 </div>
-                <div className = "body">
-                {post.body}
+                <div  dangerouslySetInnerHTML={{__html: post.body}} className = "body" >
 
                 </div>
             </div>

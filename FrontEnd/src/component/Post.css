@@ -19,6 +19,7 @@
     transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
     display: flex;
     flex-direction: column;
+    height: 15rem;
 }
 
 .postCard:hover {

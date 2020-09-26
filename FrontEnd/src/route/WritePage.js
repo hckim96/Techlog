@@ -23,10 +23,15 @@ export const WritePage = (props) => {
     const writePost = () => {
         let jwtToken = localStorage.getItem("JWT_TOKEN");
         if (jwtToken != null) {
-
-            axios.post("/v1/api/write", input,{headers:{"X-AUTH-TOKEN": `${jwtToken}`}})
-            .then(res => props.history.push("/"))
-            .catch(res => console.log(res))
+            if (input.title === "") {
+                alert("input title");
+            } else if (value === "") {
+                alert("input body");
+            } else {
+                axios.post("/v1/api/write", {...input, body: value},{headers:{"X-AUTH-TOKEN": `${jwtToken}`}})
+                .then(res => props.history.push("/"))
+                .catch(res => console.log(res))
+            }
             
 
         } else {
@@ -47,30 +52,44 @@ export const WritePage = (props) => {
          setValue(e);
     }
     return (
-        <div className = "container mt-5 vh-100">
-            <div className = "mt-5 h-75">
-                <form>
-                <label >Title</label>
-
+        <div className = "container d-flex flex-column vh-100 py-5">
+            <div className = "d-flex flex-column flex-grow-1">
                 <input value = {input.title}
                         name = "title"
                         className="form-control form-control-lg mb-2 "
                         onChange = {updateField}
                         placeholder = "Input title..." required autoFocus>
                 </input>
-                <div className="mb-3">
-                    <label >Body</label>
-                    {/* <textarea name = "body" value = {input.body} onChange = {updateField} className="form-control "  placeholder="Input body..." required></textarea> */}
-                    <ReactQuill theme="snow" name = "body" value={value} onChange={quillOnChange}/>
-                </div>
-                </form>
-
+                <ReactQuill placeholder = "input body..." theme="snow" value={value} onChange={quillOnChange} style ={{flexGrow : "1"}}
+                    modules = {{
+                        toolbar: 
+                        [
+                          [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+                          [{size: []}],
+                          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                          [{'list': 'ordered'}, {'list': 'bullet'}, 
+                           {'indent': '-1'}, {'indent': '+1'}],
+                          ['link', 'image', 'video'],
+                          ['clean']
+                        ]
+                        ,
+                        clipboard: {
+                          // toggle to add extra line breaks when pasting HTML:
+                          matchVisual: false,
+                        }
+                      }}
+                    formats = {[
+                        'header', 'font', 'size',
+                        'bold', 'italic', 'underline', 'strike', 'blockquote',
+                        'list', 'bullet', 'indent',
+                        'link', 'image', 'video','code-block'
+                      ]}
+                />
             </div>
-            <div className = "mb-0 ">
-                <button className = "btn btn-primary float-right" onClick = {writePost}>
+            <div className = "mt-5 w-100 p-3">
+                <button className = "btn btn-primary float-right p" onClick = {writePost}>
                     write
                 </button>
-
             </div>
         </div>
     )

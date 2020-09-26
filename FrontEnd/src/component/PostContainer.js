@@ -27,18 +27,20 @@ export const Post = ({title, author, body, createdDate, link}) => {
     const postId = link.substr(link.lastIndexOf("/")+1);
     return (
         <div className = "col-md-4 py-2">
-            <Link to = {`/@${author}/${postId}`} className = "border p-2  post  postCard" style = {{textDecoration: "none", color: "black"}}>
+            <Link to = {`/@${author}/${postId}`} className = "d-flex flex-column border p-2  post  postCard" style = {{textDecoration: "none", color: "black"}}>
                 <div className = "font-weight-bolder mb-3" style ={{fontSize: "1.5rem"}}>
                     {title}
                 </div>
-                <div className = "text-wrap mb-3 mybody">
-                    {body}
+                <div className = "text-wrap mb-3 mybody" dangerouslySetInnerHTML={{__html: body}}>
                 </div>
-                <div className = "mb-3 text-secondary">
+                <div className = "mt-auto text-secondary">
                     {createdDate}
                 </div>
-                <div className = "border-top text-secondary font-italic">
-                    by {author}
+                <div className = "border-top text-secondary font-italic mt-2">
+                    by
+                    <Link to = {`/@${author}`} style = {{color: "black", marginLeft: ".25rem"}}>
+                        {author}
+                    </Link>
                 </div>
             </Link>
         </div>
